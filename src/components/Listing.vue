@@ -1,10 +1,38 @@
 <template>
   <div>
-    <b-button variant="info">Info</b-button>
-    <p>Você quer me ver ...</p>
-    <p>...ou eu</p>
-    <p>Você quer me ver ...</p>
-    <p>...ou eu</p>
+    <b-button variant="info" class="mt-5" @click="expressao = !expressao;"
+      >Alternar</b-button
+    >
+    <p v-if="expressao">Você quer me ver ...</p>
+    <p v-else>...ou eu</p>
+    <p v-show="expressao">Você quer me ver ...</p>
+    <p v-show="!expressao">...ou eu</p>
+
+    <hr />
+
+    <div v-for="(nome, inome) in nomes" :key="inome">
+      {{ inome }} - {{ nome }}
+    </div>
+
+    <hr />
+
+    <div v-for="(valor, chave, ilivro) in livro" :key="ilivro">
+      {{ ilivro + 1 }}) {{ chave }}: {{ valor }}
+    </div>
+
+    <hr />
+
+    <div v-for="(valor, ialuno) in aluno" :key="ialuno">
+      <template v-if="!Array.isArray(valor)">
+        {{ valor }}
+      </template>
+      <template v-else>
+        Notas:
+        <ul>
+          <li v-for="(nota, inota) in valor" :key="inota">{{ nota }}</li>
+        </ul>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -13,10 +41,12 @@ export default {
   name: "Listing",
   data() {
     return {
+      expressao: true,
+      nomes: ["Thiago", "Camilla", "Julis", "Clarinha"],
       livro: {
         titulo: "O Senhor dos Anéis",
         autor: "J.R.R. Tolkiens",
-        Volume: "3"
+        volume: "3"
       },
       aluno: {
         id: 10,
